@@ -21,9 +21,9 @@ namespace ItemInventory2.Controllers
         }
         public IActionResult Index(int page = 1, int pagesToShow = 20)
         {
-            int pageSize = 20; // Items per page
-            int totalItems = _context.Items.Count(); // Total number of records
-            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize); // Total pages
+            int pageSize = 20; 
+            int totalItems = _context.Items.Count(); 
+            int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
 
             var items = _context.Items
                 .OrderBy(item => item.ItemNo)
@@ -38,7 +38,7 @@ namespace ItemInventory2.Controllers
                 })
                 .ToList();
 
-            // Calculate visible page range
+            
             int startPage = ((page - 1) / pagesToShow) * pagesToShow + 1;
             int endPage = Math.Min(startPage + pagesToShow - 1, totalPages);
 
@@ -52,12 +52,14 @@ namespace ItemInventory2.Controllers
         }
 
 
-
         [HttpPost]
         public async Task<IActionResult> Import(IFormFile file)
         {
             if (file == null || file.Length == 0)
-                return BadRequest("No file uploaded.");
+            {
+                TempData["ErrorMessage"] = "No file uploaded.";
+                return RedirectToAction("Upload", "Items");
+            }
 
             var items = new List<Item>();
 
@@ -69,7 +71,6 @@ namespace ItemInventory2.Controllers
                 {
                     var line = await reader.ReadLineAsync();
 
-                    
                     if (isFirstLine)
                     {
                         isFirstLine = false;
@@ -91,32 +92,38 @@ namespace ItemInventory2.Controllers
                         }
                         catch (FormatException)
                         {
-                            return BadRequest($"Invalid data format on line: {line}");
+                            TempData["ErrorMessage"] = "Invalid data format in the uploaded file.";
+                            return RedirectToAction("Upload", "Items");
                         }
                     }
                     else
                     {
-                        return BadRequest($"Invalid line structure: {line}");
+                        TempData["ErrorMessage"] = "Invalid file structure.";
+                        return RedirectToAction("Upload", "Items");
                     }
                 }
             }
 
             var distinctItems = items
-                .GroupBy(i => i.ItemNo) 
-                .Select(g => g.First()) 
+                .GroupBy(i => i.ItemNo)
+                .Select(g => g.First())
                 .ToList();
 
             try
             {
                 await _context.BulkInsertOrUpdateAsync(distinctItems);
 
+                TempData["SuccessMessage"] = "File uploaded successfully!";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                return BadRequest($"An error occurred: {ex.Message}");
+                TempData["ErrorMessage"] = $"An error occurred: {ex.Message}";
+                return RedirectToAction("Upload", "Items");
             }
         }
+
+
     }
 
 }

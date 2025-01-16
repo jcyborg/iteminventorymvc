@@ -1,6 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Upload File";
+    ViewData["Title"] = "Par-Excellence";
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 
 <div class="glass-card">
     <h3 class="text-center mb-4">Upload Items File</h3>
@@ -13,3 +30,15 @@
         <button type="submit" class="btn btn-primary w-100">Upload</button>
     </form>
 </div>
+
+
+<script>
+    // Auto-hide the alerts after 5 seconds
+    setTimeout(() => {
+        const alerts = document.querySelectorAll('.alert');
+        alerts.forEach(alert => {
+            alert.classList.remove('show');
+            alert.classList.add('fade');
+        });
+    }, 5000);
+</script>
