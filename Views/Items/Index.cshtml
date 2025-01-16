@@ -1,7 +1,7 @@
 ﻿@using ItemInventory2.ViewModel
 @model IEnumerable<ItemVM>
 
-<!-- Success/Error Messages -->
+
 @if (TempData["SuccessMessage"] != null)
 {
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -18,7 +18,7 @@
     </div>
 }
 
-<!-- Toast Notifications -->
+
 <div aria-live="polite" aria-atomic="true" class="position-fixed bottom-0 end-0 p-3" style="z-index: 11;">
     @if (TempData["SuccessMessage"] != null)
     {
@@ -79,7 +79,6 @@
 <!-- Pagination Controls -->
 <nav aria-label="Page navigation" class="mt-4">
     <ul class="pagination justify-content-center flex-wrap">
-        <!-- Previous Set of Pages -->
         @if ((int)ViewData["StartPage"] > 1)
         {
             <li class="page-item">
@@ -87,7 +86,6 @@
             </li>
         }
 
-        <!-- Page Numbers -->
         @for (int i = (int)ViewData["StartPage"]; i <= (int)ViewData["EndPage"]; i++)
         {
             <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
@@ -95,7 +93,6 @@
             </li>
         }
 
-        <!-- Next Set of Pages -->
         @if ((int)ViewData["EndPage"] < (int)ViewData["TotalPages"])
         {
             <li class="page-item">
@@ -106,7 +103,6 @@
 </nav>
 
 <script>
-    // Auto-hide the alerts after 5 seconds
     setTimeout(() => {
         const alerts = document.querySelectorAll('.alert');
         alerts.forEach(alert => {
@@ -115,7 +111,6 @@
         });
     }, 5000);
 
-    // Auto-show Bootstrap Toasts
     document.querySelectorAll('.toast').forEach(toastEl => {
         new bootstrap.Toast(toastEl).show();
     });

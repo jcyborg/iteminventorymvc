@@ -21,29 +21,29 @@ body {
   margin-bottom: 60px;
 }
 
-/* Glass Card Styling */
+
 .glass-card {
     max-width: 500px;
     margin: 50px auto;
     padding: 20px;
     background: rgba(128, 189, 255, 0.25); 
-    border-radius: 15px; /* Rounded corners */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); /* 3D shadow effect */
-    backdrop-filter: blur(10px); /* Blur background for glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.18); /* Light border */
-    color: #000000; /* Text color */
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25); 
+    backdrop-filter: blur(10px); 
+    border: 1px solid rgba(255, 255, 255, 0.18); 
+    color: #000000; 
 }
 
-    /* Form Control Styling */
+    
     .glass-card .form-control {
-        background: rgba(255, 255, 255, 0.25); /* Semi-transparent input */
-        border: 1px solid rgba(255, 255, 255, 0.3); /* Border for input */
-        color: #06061b; /* Input text color */
-        backdrop-filter: blur(5px); /* Blur effect for input */
+        background: rgba(255, 255, 255, 0.25); 
+        border: 1px solid rgba(255, 255, 255, 0.3); 
+        color: #06061b; 
+        backdrop-filter: blur(5px); 
     }
 
         .glass-card .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6); /* Placeholder text */
+            color: rgba(255, 255, 255, 0.6); 
         }
 
         .glass-card .form-control:focus {
@@ -53,9 +53,9 @@ body {
             box-shadow: 0 0 0 0.2rem rgba(128, 189, 255, 0.25);
         }
 
-    /* Button Styling */
+  
     .glass-card .btn-primary {
-        background: linear-gradient(145deg, #1e90ff, #1c86ee); /* Gradient for button */
+        background: linear-gradient(145deg, #1e90ff, #1c86ee);
         border: none;
         color: #fff;
         border-radius: 10px;
@@ -65,6 +65,6 @@ body {
 
         .glass-card .btn-primary:hover {
             background: linear-gradient(145deg, #1c86ee, #1e90ff);
-            transform: translateY(-2px); /* Slightly lift on hover */
-            box-shadow: 0 8px 15px rgba(30, 144, 255, 0.4); /* Add hover shadow */
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 15px rgba(30, 144, 255, 0.4); 
         }
