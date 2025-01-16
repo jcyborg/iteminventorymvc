@@ -3,6 +3,7 @@ using ItemInventory2.DataLayer.ApplicationUsers;
 using ItemInventory2.DataLayer.ApplicationUsers.Models;
 using ItemInventory2.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ItemInventory2.Controllers
 {
@@ -104,6 +105,7 @@ namespace ItemInventory2.Controllers
                 }
             }
 
+            // Ensure distinct items are processed
             var distinctItems = items
                 .GroupBy(i => i.ItemNo)
                 .Select(g => g.First())
@@ -111,6 +113,18 @@ namespace ItemInventory2.Controllers
 
             try
             {
+                // Check if all items already exist in the database
+                var existingItems = await _context.Items
+                    .Where(dbItem => distinctItems.Select(fileItem => fileItem.ItemNo).Contains(dbItem.ItemNo))
+                    .ToListAsync();
+
+                if (existingItems.Count == distinctItems.Count)
+                {
+                    TempData["ErrorMessage"] = "This file was recently uploaded. All records already exist in the database.";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                // Perform bulk insert or update
                 await _context.BulkInsertOrUpdateAsync(distinctItems);
 
                 TempData["SuccessMessage"] = "File uploaded successfully!";
@@ -122,8 +136,6 @@ namespace ItemInventory2.Controllers
                 return RedirectToAction("Upload", "Items");
             }
         }
-
-
     }
 
 }
