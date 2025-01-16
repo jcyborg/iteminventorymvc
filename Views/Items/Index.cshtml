@@ -1,0 +1,62 @@
+﻿@using ItemInventory2.ViewModel
+@model IEnumerable<ItemVM>
+
+<div class="d-flex align-items-center justify-content-between mb-3">
+    <a href="@Url.Action("Upload", "Items")" class="btn btn-primary">Go to Upload Page</a>
+    <h2 class="text-center flex-grow-1 m-0">Items Inventory</h2>
+</div>
+
+<p class="text-center">Total Records: @ViewData["TotalItems"]</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th>ItemNo</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.ItemNo</td>
+                    <td>@item.ItemDescription</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Price</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination Controls -->
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center flex-wrap">
+        <!-- Previous Set of Pages -->
+        @if ((int)ViewData["StartPage"] > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { page = (int)ViewData["StartPage"] - 1 })">Previous</a>
+            </li>
+        }
+
+        <!-- Page Numbers -->
+        @for (int i = (int)ViewData["StartPage"]; i <= (int)ViewData["EndPage"]; i++)
+        {
+            <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+            </li>
+        }
+
+        <!-- Next Set of Pages -->
+        @if ((int)ViewData["EndPage"] < (int)ViewData["TotalPages"])
+        {
+            <li class="page-item">
+                <a class="page-link" href="@Url.Action("Index", new { page = (int)ViewData["EndPage"] + 1 })">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
