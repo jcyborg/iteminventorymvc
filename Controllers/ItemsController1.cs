@@ -98,7 +98,7 @@ namespace ItemInventory2.Controllers
                 await _context.BulkInsertOrUpdateAsync(distinctItems);
 
                 HttpContext.Session.SetString("RecentBatchId", uploadBatchId.ToString());
-                HttpContext.Session.SetString("TotalRecordsMessage", $"Total Records of Uploaded File: {distinctItems.Count}");
+                HttpContext.Session.SetString("TotalRecordsMessage", $"Total records in imported items: {distinctItems.Count}");
                 TempData["SuccessMessage"] = "File uploaded successfully!";
 
                 return RedirectToAction(nameof(Index));
@@ -181,7 +181,7 @@ namespace ItemInventory2.Controllers
             int startPage = ((page - 1) / pagesToShow) * pagesToShow + 1;
             int endPage = Math.Min(startPage + pagesToShow - 1, totalPages);
 
-            HttpContext.Session.SetString("TotalRecordsMessage", $"Total Records of All Items: {totalItems}");
+            HttpContext.Session.SetString("TotalRecordsMessage", $"Total records of all items: {totalItems}");
 
             ViewData["TotalItems"] = totalItems;
             ViewData["CurrentPage"] = page;
