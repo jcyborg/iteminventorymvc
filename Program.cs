@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSession();
 builder.Services.AddDbContext<AppUsersContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UsersConnString")
     ?? Environment.GetEnvironmentVariable("ConnectionStrings__UsersConnString")));
@@ -21,9 +21,12 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 
+
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 

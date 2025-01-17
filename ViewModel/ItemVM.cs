@@ -12,5 +12,6 @@ namespace ItemInventory2.ViewModel
         public int? Quantity { get; set; }
 
         public decimal? Price { get; set; }
+        public string BatchId { get; set; } = null!;
     }
 }

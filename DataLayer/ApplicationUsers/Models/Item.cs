@@ -20,4 +20,8 @@ public partial class Item
 
     [Column(TypeName = "decimal(18, 2)")]
     public decimal? Price { get; set; }
+
+    [StringLength(50)]
+    [Unicode(false)]
+    public string? BatchId { get; set; }
 }

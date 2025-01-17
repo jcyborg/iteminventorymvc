@@ -45,12 +45,14 @@
     }
 </div>
 
-<div class="d-flex align-items-center justify-content-between mb-3">
-    <a href="@Url.Action("Upload", "Items")" class="btn btn-primary">Go to Upload Page</a>
-    <h2 class="text-center flex-grow-1 m-0">Items Inventory</h2>
+<div class="d-flex flex-column align-items-center mb-3">
+    <div class="d-flex align-items-center justify-content-center w-100">
+        <a href="@Url.Action("Upload", "Items")" class="btn btn-primary me-2">Go to Upload Page</a>
+        <a href="@Url.Action("AllItems", "Items")" class="btn btn-secondary">View All Items</a>
+    </div>
+    <h2 class="text-center mt-3">Items Inventory</h2>
+    <p class="text-center mt-1">@ViewBag.TotalRecordsMessage</p>
 </div>
-
-<p class="text-center">Total Records: @ViewData["TotalItems"]</p>
 
 <div class="table-responsive">
     <table class="table table-striped table-bordered">
