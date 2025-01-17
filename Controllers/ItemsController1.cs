@@ -88,7 +88,7 @@ namespace ItemInventory2.Controllers
                 var existingItems = await _context.Items
                     .Where(dbItem => distinctItems.Select(fileItem => fileItem.ItemNo).Contains(dbItem.ItemNo))
                     .ToListAsync();
-                HttpContext.Session.SetString("TotalRecordsMessage", $"Total Records of Uploaded File: {distinctItems.Count}");
+                HttpContext.Session.SetString("TotalRecordsMessage", $"Total records of pre-existing items: {distinctItems.Count}");
                 if (existingItems.Count == distinctItems.Count)
                 {
                     TempData["ErrorMessage"] = "This file was recently uploaded. All records already exist in the database.";
@@ -98,7 +98,7 @@ namespace ItemInventory2.Controllers
                 await _context.BulkInsertOrUpdateAsync(distinctItems);
 
                 HttpContext.Session.SetString("RecentBatchId", uploadBatchId.ToString());
-                HttpContext.Session.SetString("TotalRecordsMessage", $"Total records in imported items: {distinctItems.Count}");
+                HttpContext.Session.SetString("TotalRecordsMessage", $"Total records of newly imported items: {distinctItems.Count}");
                 TempData["SuccessMessage"] = "File uploaded successfully!";
 
                 return RedirectToAction(nameof(Index));
